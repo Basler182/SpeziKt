@@ -1,6 +1,28 @@
 # Coroutines module
 
-Module that provides access to different `CoroutineDispatcher`s and `CoroutineScope`s in coroutine-based applications to manage concurrency and threading.
+Module that provides access to different `CoroutineDispatcher`s and `CoroutineScope`s in coroutine-based components 
+to manage concurrency and threading.
+
+Access is enabled via `DispatchersProvider` component which is available in Hilt DI graph:
+
+```kotlin
+interface DispatchersProvider {
+    fun main(): CoroutineDispatcher
+    fun default(): CoroutineDispatcher
+    fun io(): CoroutineDispatcher
+    fun unconfined(): CoroutineDispatcher
+}
+```
+
+It additionally provides four qualifiers to request the injection of a specific `CoroutineDispatcher` or `CoroutineScope` 
+as shown in [Example usage](#example-usage).
+
+### Dependency
+```gradle
+dependencies {
+    implementation(project(":core:coroutines"))
+}
+```
 
 ### Example usage
 
@@ -25,3 +47,4 @@ class MyClass @Inject constructor(
         }
     }
 }
+```
