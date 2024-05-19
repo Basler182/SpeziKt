@@ -60,6 +60,8 @@ internal class BLEDeviceConnector @AssistedInject constructor(
                 }
                 BluetoothProfile.STATE_DISCONNECTED -> {
                     emit(event = BLEServiceEvent.Disconnected(device))
+                    bluetoothGatt = null
+                    isDestroyed.set(true)
                 }
             }
         }
@@ -104,7 +106,7 @@ internal class BLEDeviceConnector @AssistedInject constructor(
      */
     fun disconnect() {
         if (isDestroyed.getAndSet(true).not()) {
-            bluetoothGatt?.disconnect() ?: emit(event = BLEServiceEvent.Disconnected(device = device))
+            bluetoothGatt?.disconnect() ?: scope.launch { _events.emit(BLEServiceEvent.Disconnected(device = device)) }
             bluetoothGatt = null
         }
     }
