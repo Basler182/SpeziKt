@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "edu.stanford.spezi.testing"
+    namespace = "edu.stanford.spezi.core.testing"
 }
 
 dependencies {

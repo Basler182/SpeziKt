@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "edu.stanford.spezi.logging"
+    namespace = "edu.stanford.spezi.core.logging"
 }
 
 dependencies {

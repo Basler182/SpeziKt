@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "edu.stanford.spezikt.coroutines"
+    namespace = "edu.stanford.spezikt.core.coroutines"
 }
 
 dependencies {
