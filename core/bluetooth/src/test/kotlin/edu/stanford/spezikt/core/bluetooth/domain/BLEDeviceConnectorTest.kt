@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothGattService
 import android.bluetooth.BluetoothProfile
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
+import edu.stanford.spezi.core.testing.SpeziTestScope
 import edu.stanford.spezi.core.testing.runTestUnconfined
 import edu.stanford.spezi.core.utils.UUID
 import edu.stanford.spezikt.core.bluetooth.data.mapper.MeasurementMapper
@@ -23,15 +24,12 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Before
 import org.junit.Test
 
 class BLEDeviceConnectorTest {
     private val device: BluetoothDevice = mockk()
     private val measurementMapper: MeasurementMapper = mockk()
-    private val scope = TestScope(context = UnconfinedTestDispatcher())
     private val context: Context = mockk()
     private val bluetoothGatt: BluetoothGatt = mockk()
 
@@ -39,7 +37,7 @@ class BLEDeviceConnectorTest {
         BLEDeviceConnector(
             device = device,
             measurementMapper = measurementMapper,
-            scope = scope,
+            scope = SpeziTestScope(),
             context = context,
         )
     }

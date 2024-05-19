@@ -8,6 +8,7 @@ import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import com.google.common.truth.Truth.assertThat
+import edu.stanford.spezi.core.testing.SpeziTestScope
 import edu.stanford.spezi.core.testing.runTestUnconfined
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceType
 import edu.stanford.spezikt.core.bluetooth.data.model.SupportedServices
@@ -19,17 +20,13 @@ import io.mockk.mockk
 import io.mockk.mockkConstructor
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Before
 import org.junit.Test
 
 class BLEDeviceScannerTest {
     private val bluetoothAdapter: BluetoothAdapter = mockk()
     private val supportedServices: SupportedServices = SupportedServices(services = BLEServiceType.entries)
-    private val scope: CoroutineScope = TestScope(context = UnconfinedTestDispatcher())
     private val bluetoothLeScanner: BluetoothLeScanner = mockk()
     private val device: BluetoothDevice = mockk {
         every { address } returns "some device address"
@@ -42,7 +39,7 @@ class BLEDeviceScannerTest {
         BLEDeviceScanner(
             bluetoothAdapter = bluetoothAdapter,
             supportedServices = supportedServices,
-            scope = scope
+            scope = SpeziTestScope(),
         )
     }
 
