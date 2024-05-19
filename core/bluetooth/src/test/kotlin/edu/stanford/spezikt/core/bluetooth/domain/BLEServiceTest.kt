@@ -9,6 +9,7 @@ import edu.stanford.spezi.core.testing.runTestUnconfined
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEDeviceSession
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceState
+import edu.stanford.spezikt.core.bluetooth.data.model.Measurement
 import io.mockk.Called
 import io.mockk.Runs
 import io.mockk.every
@@ -167,7 +168,64 @@ class BLEServiceTest {
 
         // then
         assertEvent(event)
-        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Scanning(listOf(BLEDeviceSession(device, emptyList()))))
+        assertScanning(emptyList())
+    }
+
+    @Test
+    fun `it should handle disconnected event after connection event correctly`() = runTestUnconfined {
+        // given
+        val event = BLEServiceEvent.Connected(device)
+        setupDeviceConnectorEvent(event)
+        val connected = bleService.state.value == BLEServiceState.Scanning(listOf(BLEDeviceSession(device, emptyList())))
+
+        // when
+        setupDeviceConnectorEvent(BLEServiceEvent.Disconnected(device))
+
+        // then
+        assertThat(connected).isTrue()
+        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Scanning(emptyList()))
+    }
+
+    @Test
+    fun `it should handle disconnected event correctly`() = runTestUnconfined {
+        // given
+        val event = BLEServiceEvent.Disconnected(device)
+
+        // when
+        setupDeviceConnectorEvent(event)
+
+        // then
+        assertEvent(event)
+        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Idle)
+    }
+
+    @Test
+    fun `it should handle MeasurementReceived after connect event correctly correctly`() = runTestUnconfined {
+        // given
+        setupDeviceConnectorEvent(BLEServiceEvent.Connected(device))
+
+        // when
+        val measurement: Measurement = mockk()
+        val event = BLEServiceEvent.MeasurementReceived(device, measurement)
+        setupDeviceConnectorEvent(event)
+
+        // then
+        assertEvent(event)
+        assertScanning(listOf(measurement))
+    }
+
+    @Test
+    fun `it should handle MeasurementReceived event correctly correctly`() = runTestUnconfined {
+        // given
+        val measurement: Measurement = mockk()
+        val event = BLEServiceEvent.MeasurementReceived(device, measurement)
+
+        // when
+        setupDeviceConnectorEvent(event)
+
+        // then
+        assertEvent(event)
+        assertScanning(listOf(measurement))
     }
 
     private fun start() {
@@ -175,6 +233,10 @@ class BLEServiceTest {
         every { bluetoothAdapter.isEnabled } returns true
         every { permissionChecker.isPermissionGranted(any()) } returns true
         bleService.start()
+    }
+
+    private fun assertScanning(measurements: List<Measurement>) {
+        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Scanning(listOf(BLEDeviceSession(device, measurements))))
     }
 
     private suspend fun emitDeviceFound() {
@@ -185,10 +247,6 @@ class BLEServiceTest {
         start()
         emitDeviceFound()
         deviceConnectorEvents.emit(event)
-    }
-
-    private suspend fun connect() {
-        setupDeviceConnectorEvent(BLEServiceEvent.Connected(device))
     }
 
     private suspend fun assertEvent(event: BLEServiceEvent) {
