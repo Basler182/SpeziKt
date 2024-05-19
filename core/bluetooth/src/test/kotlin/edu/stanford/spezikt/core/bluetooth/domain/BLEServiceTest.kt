@@ -97,7 +97,7 @@ class BLEServiceTest {
         bleService.start()
 
         // then
-        assertEvent(BLEServiceEvent.BluetoothNotEnabled)
+        assertEvent(event = BLEServiceEvent.BluetoothNotEnabled)
     }
 
     @Test
@@ -113,7 +113,7 @@ class BLEServiceTest {
         bleService.start()
 
         // then
-        assertEvent(BLEServiceEvent.MissingPermissions(expectedPermissions))
+        assertEvent(event = BLEServiceEvent.MissingPermissions(permissions = expectedPermissions))
     }
 
     @Test
@@ -129,7 +129,7 @@ class BLEServiceTest {
         // then
         verify { deviceScanner.events }
         verify { deviceScanner.startScanning() }
-        assertEvent(BLEServiceEvent.ScanningStarted)
+        assertEvent(event = BLEServiceEvent.ScanningStarted)
     }
 
     @Test
@@ -139,14 +139,14 @@ class BLEServiceTest {
         start()
 
         // when
-        deviceScannerEvents.emit(BLEDeviceScanner.Event.Failure(errorCode))
+        deviceScannerEvents.emit(BLEDeviceScanner.Event.Failure(errorCode = errorCode))
 
         // then
-        assertEvent(BLEServiceEvent.ScanningFailed(errorCode))
+        assertEvent(event = BLEServiceEvent.ScanningFailed(errorCode = errorCode))
     }
 
     @Test
-    fun `it should handle found even correctly`() = runTestUnconfined {
+    fun `it should handle device found event correctly`() = runTestUnconfined {
         // given
         start()
 
@@ -154,7 +154,7 @@ class BLEServiceTest {
         emitDeviceFound()
 
         // then
-        verify { deviceConnectorFactory.create(device) }
+        verify { deviceConnectorFactory.create(device = device) }
         verify { deviceConnector.connect() }
         verify { deviceConnector.events }
     }
@@ -162,71 +162,71 @@ class BLEServiceTest {
     @Test
     fun `it should handle connected event correctly`() = runTestUnconfined {
         // given
-        val event = BLEServiceEvent.Connected(device)
+        val event = BLEServiceEvent.Connected(device = device)
 
         // when
-        setupDeviceConnectorEvent(event)
+        setupDeviceConnectorEvent(event = event)
 
         // then
-        assertEvent(event)
-        assertScanning(emptyList())
+        assertEvent(event = event)
+        assertScanning(measurements = emptyList())
     }
 
     @Test
     fun `it should handle disconnected event after connection event correctly`() = runTestUnconfined {
         // given
-        val event = BLEServiceEvent.Connected(device)
-        setupDeviceConnectorEvent(event)
-        val connected = bleService.state.value == BLEServiceState.Scanning(listOf(BLEDeviceSession(device, emptyList())))
+        val event = BLEServiceEvent.Connected(device = device)
+        setupDeviceConnectorEvent(event = event)
+        val connected = bleService.state.value == BLEServiceState.Scanning(sessions = listOf(BLEDeviceSession(device, emptyList())))
 
         // when
-        setupDeviceConnectorEvent(BLEServiceEvent.Disconnected(device))
+        deviceConnectorEvents.emit(BLEServiceEvent.Disconnected(device = device))
 
         // then
         assertThat(connected).isTrue()
-        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Scanning(emptyList()))
+        assertState(state = BLEServiceState.Scanning(sessions = emptyList()))
     }
 
     @Test
     fun `it should handle disconnected event correctly`() = runTestUnconfined {
         // given
-        val event = BLEServiceEvent.Disconnected(device)
+        val event = BLEServiceEvent.Disconnected(device = device)
 
         // when
-        setupDeviceConnectorEvent(event)
+        setupDeviceConnectorEvent(event = event)
 
         // then
-        assertEvent(event)
-        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Idle)
+        assertEvent(event = event)
+        assertState(state = BLEServiceState.Idle)
     }
 
     @Test
     fun `it should handle MeasurementReceived after connect event correctly correctly`() = runTestUnconfined {
         // given
-        setupDeviceConnectorEvent(BLEServiceEvent.Connected(device))
+        setupDeviceConnectorEvent(event = BLEServiceEvent.Connected(device = device))
 
         // when
         val measurement: Measurement = mockk()
-        val event = BLEServiceEvent.MeasurementReceived(device, measurement)
-        setupDeviceConnectorEvent(event)
+        val event = BLEServiceEvent.MeasurementReceived(device = device, measurement = measurement)
+        deviceConnectorEvents.emit(event)
 
         // then
-        assertEvent(event)
-        assertScanning(listOf(measurement))
+        assertEvent(event = event)
+        assertScanning(measurements = listOf(measurement))
     }
 
     @Test
     fun `it should handle MeasurementReceived event correctly correctly`() = runTestUnconfined {
         // given
         val measurement: Measurement = mockk()
-        val event = BLEServiceEvent.MeasurementReceived(device, measurement)
+        val event = BLEServiceEvent.MeasurementReceived(device = device, measurement = measurement)
 
         // when
-        setupDeviceConnectorEvent(event)
+        setupDeviceConnectorEvent(event = event)
 
         // then
-        assertEvent(event)
-        assertScanning(listOf(measurement))
+        assertEvent(event = event)
+        assertScanning(measurements = listOf(measurement))
     }
 
     private fun start() {
@@ -237,11 +237,12 @@ class BLEServiceTest {
     }
 
     private fun assertScanning(measurements: List<Measurement>) {
-        assertThat(bleService.state.value).isEqualTo(BLEServiceState.Scanning(listOf(BLEDeviceSession(device, measurements))))
+        val session = BLEDeviceSession(device = device, measurements = measurements)
+        assertState(state = BLEServiceState.Scanning(sessions = listOf(session)))
     }
 
     private suspend fun emitDeviceFound() {
-        deviceScannerEvents.emit(BLEDeviceScanner.Event.DeviceFound(device))
+        deviceScannerEvents.emit(BLEDeviceScanner.Event.DeviceFound(device = device))
     }
 
     private suspend fun setupDeviceConnectorEvent(event: BLEServiceEvent) {
@@ -252,5 +253,9 @@ class BLEServiceTest {
 
     private suspend fun assertEvent(event: BLEServiceEvent) {
         assertThat(bleService.events.first()).isEqualTo(event)
+    }
+
+    private fun assertState(state: BLEServiceState) {
+        assertThat(bleService.state.value).isEqualTo(state)
     }
 }
