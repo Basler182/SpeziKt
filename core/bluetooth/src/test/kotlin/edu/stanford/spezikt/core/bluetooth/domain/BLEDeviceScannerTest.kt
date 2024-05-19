@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.domain
+package edu.stanford.spezikt.core.bluetooth.domain
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -10,8 +10,8 @@ import android.bluetooth.le.ScanSettings
 import com.google.common.truth.Truth.assertThat
 import edu.stanford.spezi.core.testing.SpeziTestScope
 import edu.stanford.spezi.core.testing.runTestUnconfined
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceType
-import edu.stanford.spezikt.bluetooth.data.model.SupportedServices
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceType
+import edu.stanford.spezikt.core.bluetooth.data.model.SupportedServices
 import io.mockk.Called
 import io.mockk.Runs
 import io.mockk.every

@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.data.model
+package edu.stanford.spezikt.core.bluetooth.data.model
 
 /**
  * Represents the state of the Bluetooth Low Energy (BLE) service.

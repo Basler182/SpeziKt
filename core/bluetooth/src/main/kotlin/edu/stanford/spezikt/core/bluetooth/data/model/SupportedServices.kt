@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.data.model
+package edu.stanford.spezikt.core.bluetooth.data.model
 
 /**
  * Represents a list of supported Bluetooth Low Energy (BLE) services, serving as a wrapper around a list of BLE service types

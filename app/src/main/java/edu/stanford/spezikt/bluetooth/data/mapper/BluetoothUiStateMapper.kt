@@ -1,9 +1,9 @@
 package edu.stanford.spezikt.bluetooth.data.mapper
 
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceState
-import edu.stanford.spezikt.bluetooth.data.model.Measurement
 import edu.stanford.spezikt.bluetooth.data.models.BluetoothUiState
 import edu.stanford.spezikt.bluetooth.data.models.DeviceUiModel
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceState
+import edu.stanford.spezikt.core.bluetooth.data.model.Measurement
 import java.util.Locale
 import javax.inject.Inject
 

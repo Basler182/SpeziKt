@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.di
+package edu.stanford.spezikt.core.bluetooth.di
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
@@ -9,12 +9,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import edu.stanford.spezikt.bluetooth.api.BLEService
-import edu.stanford.spezikt.bluetooth.data.mapper.MeasurementMapper
-import edu.stanford.spezikt.bluetooth.data.mapper.MeasurementMapperImpl
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceType
-import edu.stanford.spezikt.bluetooth.data.model.SupportedServices
-import edu.stanford.spezikt.bluetooth.domain.BLEServiceImpl
+import edu.stanford.spezikt.core.bluetooth.api.BLEService
+import edu.stanford.spezikt.core.bluetooth.data.mapper.MeasurementMapper
+import edu.stanford.spezikt.core.bluetooth.data.mapper.MeasurementMapperImpl
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceType
+import edu.stanford.spezikt.core.bluetooth.data.model.SupportedServices
+import edu.stanford.spezikt.core.bluetooth.domain.BLEServiceImpl
 import javax.inject.Singleton
 
 /**

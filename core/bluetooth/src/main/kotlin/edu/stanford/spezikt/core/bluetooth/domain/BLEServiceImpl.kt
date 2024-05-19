@@ -1,15 +1,15 @@
-package edu.stanford.spezikt.bluetooth.domain
+package edu.stanford.spezikt.core.bluetooth.domain
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import edu.stanford.spezi.logging.speziLogger
 import edu.stanford.spezi.utils.extensions.append
-import edu.stanford.spezikt.bluetooth.api.BLEService
-import edu.stanford.spezikt.bluetooth.data.model.BLEDeviceSession
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceEvent
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceState
-import edu.stanford.spezikt.bluetooth.data.model.Measurement
+import edu.stanford.spezikt.core.bluetooth.api.BLEService
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEDeviceSession
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceState
+import edu.stanford.spezikt.core.bluetooth.data.model.Measurement
 import edu.stanford.spezikt.coroutines.di.Dispatching
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

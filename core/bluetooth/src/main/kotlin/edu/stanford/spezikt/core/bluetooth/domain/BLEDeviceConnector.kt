@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.domain
+package edu.stanford.spezikt.core.bluetooth.domain
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
@@ -13,8 +13,8 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ApplicationContext
 import edu.stanford.spezi.utils.UUID
-import edu.stanford.spezikt.bluetooth.data.mapper.MeasurementMapper
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceEvent
+import edu.stanford.spezikt.core.bluetooth.data.mapper.MeasurementMapper
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
 import edu.stanford.spezikt.coroutines.di.Dispatching
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow

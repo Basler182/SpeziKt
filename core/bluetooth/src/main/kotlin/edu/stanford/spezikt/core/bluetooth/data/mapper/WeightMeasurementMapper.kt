@@ -1,8 +1,8 @@
-package edu.stanford.spezikt.bluetooth.data.mapper
+package edu.stanford.spezikt.core.bluetooth.data.mapper
 
 import android.bluetooth.BluetoothGattCharacteristic
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceType
-import edu.stanford.spezikt.bluetooth.data.model.Measurement
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceType
+import edu.stanford.spezikt.core.bluetooth.data.model.Measurement
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime

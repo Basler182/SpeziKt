@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.domain
+package edu.stanford.spezikt.core.bluetooth.domain
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
@@ -7,10 +7,10 @@ import com.google.common.truth.Truth.assertThat
 import edu.stanford.spezi.core.testing.SpeziTestScope
 import edu.stanford.spezi.core.testing.runTestUnconfined
 import edu.stanford.spezi.core.testing.verifyNever
-import edu.stanford.spezikt.bluetooth.data.model.BLEDeviceSession
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceEvent
-import edu.stanford.spezikt.bluetooth.data.model.BLEServiceState
-import edu.stanford.spezikt.bluetooth.data.model.Measurement
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEDeviceSession
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
+import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceState
+import edu.stanford.spezikt.core.bluetooth.data.model.Measurement
 import io.mockk.Called
 import io.mockk.Runs
 import io.mockk.every

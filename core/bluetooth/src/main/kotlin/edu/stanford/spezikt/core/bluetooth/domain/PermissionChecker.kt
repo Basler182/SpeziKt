@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.domain
+package edu.stanford.spezikt.core.bluetooth.domain
 
 import android.content.Context
 import android.content.pm.PackageManager

@@ -1,4 +1,4 @@
-package edu.stanford.spezikt.bluetooth.data.model
+package edu.stanford.spezikt.core.bluetooth.data.model
 
 import edu.stanford.spezi.utils.UUID
 import java.util.UUID
