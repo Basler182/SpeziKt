@@ -3,12 +3,12 @@ package edu.stanford.spezikt.bluetooth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import edu.stanford.spezi.core.logging.speziLogger
+import edu.stanford.spezi.logging.speziLogger
+import edu.stanford.spezikt.bluetooth.api.BLEService
 import edu.stanford.spezikt.bluetooth.data.mapper.BluetoothUiStateMapper
+import edu.stanford.spezikt.bluetooth.data.model.BLEServiceEvent
+import edu.stanford.spezikt.bluetooth.data.model.BLEServiceState
 import edu.stanford.spezikt.bluetooth.data.models.BluetoothUiState
-import edu.stanford.spezikt.core.bluetooth.api.BLEService
-import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
-import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow

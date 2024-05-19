@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "edu.stanford.spezikt.core.bluetooth"
+    namespace = "edu.stanford.spezikt.bluetooth"
 }
 
 dependencies {

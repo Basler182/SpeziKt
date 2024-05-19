@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "edu.stanford.spezi.core.extensions"
+    namespace = "edu.stanford.spezi.utils"
 }
 
 dependencies {
