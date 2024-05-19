@@ -59,9 +59,8 @@ internal class BLEDeviceConnector @AssistedInject constructor(
                     emit(event = BLEServiceEvent.Connected(device))
                 }
                 BluetoothProfile.STATE_DISCONNECTED -> {
-                    emit(event = BLEServiceEvent.Disconnected(device))
                     bluetoothGatt = null
-                    isDestroyed.set(true)
+                    destroy()
                 }
             }
         }
@@ -105,15 +104,22 @@ internal class BLEDeviceConnector @AssistedInject constructor(
      * If the connector is already destroyed, this method does nothing.
      */
     fun disconnect() {
-        if (isDestroyed.getAndSet(true).not()) {
-            bluetoothGatt?.disconnect() ?: scope.launch { _events.emit(BLEServiceEvent.Disconnected(device = device)) }
-            bluetoothGatt = null
-        }
+        if (isDestroyed.get().not()) destroy()
     }
 
     private fun emit(event: BLEServiceEvent) {
         if (isDestroyed.get()) return
         scope.launch { _events.emit(event) }
+    }
+
+    private fun destroy() {
+        val currentGatt = bluetoothGatt
+        if (currentGatt != null) {
+            currentGatt.disconnect()
+        } else {
+            emit(event = BLEServiceEvent.Disconnected(device))
+        }
+        isDestroyed.set(true)
     }
 
     /**

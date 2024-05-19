@@ -23,11 +23,18 @@ emits events for connection state changes and received measurements.
 
 - `PermissionChecker` class is responsible for checking Bluetooth-related permissions on the device.
 
-## Usage
+### Dependency
+```gradle
+dependencies {
+    implementation(":core:bluetooth")`
+}
+```
+
+### Usage
 
 Steps to use the Bluetooth module:
 
-1. Ensure the module is included as a dependency `implementation(":core:bluetooth")`.
+1. Ensure the module is included as a [Dependency](#dependency).
 2. Obtain an instance of the `BLEService`, e.g. using dependency injection.
 3. Start the BLE service using the `start()` method to initiate scanning for nearby devices.
 4. Listen to events emitted by the BLE service to handle device discovery, connection state changes, and received measurements.
