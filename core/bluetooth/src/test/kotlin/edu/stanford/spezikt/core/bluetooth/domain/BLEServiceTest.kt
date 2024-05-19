@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice
 import com.google.common.truth.Truth.assertThat
 import edu.stanford.spezi.core.testing.SpeziTestScope
 import edu.stanford.spezi.core.testing.runTestUnconfined
+import edu.stanford.spezi.core.testing.verifyNever
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEDeviceSession
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceState
@@ -84,7 +85,7 @@ class BLEServiceTest {
         // then
         verify { bluetoothAdapter wasNot Called }
         verify { permissionChecker wasNot Called }
-        verify(exactly = 0) { deviceScanner.startScanning() }
+        verifyNever { deviceScanner.startScanning() }
     }
 
     @Test

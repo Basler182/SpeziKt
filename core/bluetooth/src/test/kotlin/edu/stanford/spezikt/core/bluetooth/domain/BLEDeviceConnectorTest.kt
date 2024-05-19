@@ -11,6 +11,7 @@ import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import edu.stanford.spezi.core.testing.SpeziTestScope
 import edu.stanford.spezi.core.testing.runTestUnconfined
+import edu.stanford.spezi.core.testing.verifyNever
 import edu.stanford.spezi.core.utils.UUID
 import edu.stanford.spezikt.core.bluetooth.data.mapper.MeasurementMapper
 import edu.stanford.spezikt.core.bluetooth.data.model.BLEServiceEvent
@@ -182,8 +183,8 @@ class BLEDeviceConnectorTest {
         callback.onServicesDiscovered(gatt, 1)
 
         // then
-        verify(exactly = 0) { gatt.setCharacteristicNotification(characteristic, true) }
-        verify(exactly = 0) { gatt.writeDescriptor(any()) }
+        verifyNever { gatt.setCharacteristicNotification(characteristic, true) }
+        verifyNever { gatt.writeDescriptor(any()) }
     }
 
     private fun getCallback(): BluetoothGattCallback {
