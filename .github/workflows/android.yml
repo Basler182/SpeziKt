@@ -57,9 +57,12 @@ jobs:
       - name: Grant execute permissions for gradlew
         run: chmod +x ./gradlew
 
+      - name: decode and write google service json
+        env: 
+            GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $GOOGLE_SERVICES_JSON | base64 --decode >./app/google-services.json
       - name: Run Tests with Gradle
         run: ./gradlew test
-
       - name: delete google services json
         run: rm ./app/google-services.json
 
@@ -75,7 +78,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: gradle
-
+      - name: decode and write google service json
+        env: 
+            GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $GOOGLE_SERVICES_JSON | base64 --decode >./app/google-services.json
       - name: Grant execute permissions for gradlew
         run: chmod +x ./gradlew
       - name: Run Lint with Gradle
@@ -85,6 +91,8 @@ jobs:
         with:
           name: lint-results
           path: '**/build/reports/lint-results-*.html'
+      - name: delete google services json
+        run: rm ./app/google-services.json
 
   dokka:
     runs-on: ubuntu-latest
