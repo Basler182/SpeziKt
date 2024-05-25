@@ -5,6 +5,8 @@ on:
     branches: [ "feature/login-signup-onboarding" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch: # Allows manual triggering
+
 
 concurrency:
   group: build-${{ github.ref }}
